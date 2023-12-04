@@ -390,6 +390,7 @@ if exist ..\..\devtools\bin\postbuild.cmd ..\..\devtools\bin\postbuild.cmd serve
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="spawn_helper.nut" />
     <None Include="vscript_server.nut" />
   </ItemGroup>
@@ -588,6 +589,10 @@ if exist ..\..\devtools\bin\postbuild.cmd ..\..\devtools\bin\postbuild.cmd serve
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\silver-bun\memaddr.cpp" />
+    <ClCompile Include="..\..\silver-bun\module.cpp" />
+    <ClCompile Include="..\..\silver-bun\utils.cpp" />
+    <ClCompile Include="..\..\vpklib\packedstore.cpp" />
     <ClCompile Include="..\shared\achievementmgr.cpp" />
     <ClCompile Include="..\shared\achievement_saverestore.cpp" />
     <ClCompile Include="..\shared\activitylist.cpp" />
@@ -1604,6 +1609,11 @@ if exist ..\..\devtools\bin\postbuild.cmd ..\..\devtools\bin\postbuild.cmd serve
     <ClInclude Include="..\..\public\winlite.h" />
     <ClInclude Include="..\..\public\worldsize.h" />
     <ClInclude Include="..\..\public\zip_uncompressed.h" />
+    <ClInclude Include="..\..\silver-bun\memaddr.h" />
+    <ClInclude Include="..\..\silver-bun\module.h" />
+    <ClInclude Include="..\..\silver-bun\tebpeb64.h" />
+    <ClInclude Include="..\..\silver-bun\utils.h" />
+    <ClInclude Include="..\..\vpklib\packedstore_internal.h" />
     <ClInclude Include="..\shared\achievementmgr.h" />
     <ClInclude Include="..\shared\achievement_saverestore.h" />
     <ClInclude Include="..\shared\activitylist.h" />
@@ -2332,5 +2342,12 @@ if exist ..\..\devtools\bin\postbuild.cmd ..\..\devtools\bin\postbuild.cmd serve
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\minhook.1.3.3\build\native\minhook.targets" Condition="Exists('..\..\packages\minhook.1.3.3\build\native\minhook.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\minhook.1.3.3\build\native\minhook.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\minhook.1.3.3\build\native\minhook.targets'))" />
+  </Target>
 </Project>
